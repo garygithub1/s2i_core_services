@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified"
+	elementFormDefault="qualified"
+	targetNamespace="http://data.s2i.sodp.gov.on.ca"
+	xmlns:s2i="http://data.s2i.sodp.gov.on.ca"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!--Data Types-->
+	<xs:complexType name="NotificationPreferenceType">
+		<xs:sequence>
+			<xs:element name="NotificationService" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>VLRA	Vehicle License
+DLRA	Driver License
+GEN         General</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IsEnrolled" type="xs:boolean" />
+			<xs:element minOccurs="0" name="NotificationKey"
+				type="xs:string">
+				<xs:annotation>
+					<xs:documentation>It is not specified for GEN (General) Service</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="NotificationStatus">
+				<xs:annotation>
+					<xs:documentation>ACT	Active
+ANC	ANC
+IDC	IDC
+INM	INM
+INA	Inactive</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ACT" />
+						<xs:enumeration value="ANC" />
+						<xs:enumeration value="IDC" />
+						<xs:enumeration value="INA" />
+						<xs:enumeration value="INM" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="ReminderPreference" type="s2i:ReminderPreferenceType" />
+			<xs:element minOccurs="0" name="NotificationEmails"
+				type="s2i:NotificationEmailType">
+				<xs:annotation>
+					<xs:documentation>ALL Customer e-mail addresses to send notification to</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReminderPreferenceType">
+		<xs:sequence>
+			<xs:element name="NumberOfDays" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomerDetailsType">
+		<xs:sequence>
+			<xs:element minOccurs="1" name="FirstName"
+				type="xs:string">
+				<xs:annotation>
+					<xs:documentation>First Name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="MiddleName"
+				type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Middle Name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="1" name="LastName"
+				type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Last Name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="1" name="Language">
+				<xs:annotation>
+					<xs:documentation>Language:
+EN - English
+FR - French</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="EN" />
+						<xs:enumeration value="FR" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element minOccurs="0" name="Status">
+				<xs:annotation>
+					<xs:documentation>Not required for most cases - mostly for get
+
+ACT - Active
+INA - Inactive</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ACT" />
+						<xs:enumeration value="INA" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element minOccurs="0" name="ClientType">
+				<xs:annotation>
+					<xs:documentation>Not required for most cases - mostly for get
+
+ENT - eNotification client
+S2I - eReminder client
+DEN - DEN client</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ENT" />
+						<xs:enumeration value="S2I" />
+						<xs:enumeration value="DEN" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>			
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomerEmailType">
+		<xs:sequence>
+			<xs:element name="Email" nillable="true" type="xs:string" />
+			<xs:element minOccurs="1" name="EmailType">
+				<xs:annotation>
+					<xs:documentation>PRI	Primary e-mail
+SEC	Secondary e-mail</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="PRI" />
+						<xs:enumeration value="SEC" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element minOccurs="0" name="Status">
+				<xs:annotation>
+					<xs:documentation>Not used in most cases - for get only
+ACT - Active
+INA - Inactive
+INV - Invalid</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="ACT" />
+						<xs:enumeration value="INA" />
+						<xs:enumeration value="INV" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element minOccurs="0" name="Comment">
+				<xs:annotation>
+					<xs:documentation>Reason for deactivation</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NotificationEmailType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="Email"
+				nillable="true" type="xs:string" />
+			<xs:element minOccurs="0" name="UseSecondaryEmail"
+				type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomerType">
+		<xs:sequence>
+			<xs:element name="CustomerID" type="xs:string" />
+			<!-- xs:element name="CustomerType" type="xs:string" /-->
+			<xs:element name="Details" type="s2i:CustomerDetailsType" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="CustomerEmail" type="s2i:CustomerEmailType" />
+			<xs:element maxOccurs="unbounded" minOccurs="0"
+				name="NotificationPreference" type="s2i:NotificationPreferenceType" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NameValueParametersType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="Parameter">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" type="xs:string" />
+						<xs:element name="Value" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MessageAttachmentsType">
+		<xs:sequence>
+			<xs:element maxOccurs="unbounded" name="Attachment">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="FileName" type="xs:string" />
+						<xs:element name="ContentType" type="xs:string" />
+						<xs:element name="FileContent" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CustomerIDType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:complexType name="GeneralCommunicationEventType">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="EventID" type="xs:long" />
+			<xs:element minOccurs="0" name="Description"
+				type="xs:string" />
+			<xs:element name="EnglishSubject" type="xs:string" />
+			<xs:element name="EnglishTemplate" type="xs:string" />
+			<xs:element name="FrenchSubject" type="xs:string" />
+			<xs:element name="FrenchTemplate" type="xs:string" />
+			<xs:element name="EventName" type="xs:string" />
+			<xs:element name="DeliveryDate" type="xs:date" />
+			<xs:element minOccurs="0" name="Comment" type="xs:string" />
+			<xs:element minOccurs="0" name="EventStatus"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CommunicationEventType">
+		<xs:annotation>
+			<xs:documentation>NOT	Renewal Notification
+REM	- Reminder Notification
+GEN	- General Notification
+REG	- Registration
+ENR	- Enrolment</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<!--===================-->
+	<!--Global Elements-->
+	<xs:element name="VoidResponse">
+		<xs:complexType>
+			<xs:sequence />
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DSFault">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="messageCode" type="xs:string" />
+				<xs:element name="message" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- === Customer Realated Messages-->
+	<xs:element name="CreateCustomerRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PMID" type="xs:string" />
+				<xs:element name="Details"
+					type="s2i:CustomerDetailsType" />
+				<xs:element maxOccurs="unbounded" name="CustomerEmail"
+					type="s2i:CustomerEmailType" />
+				<xs:element maxOccurs="unbounded" minOccurs="0"
+					name="NotificationPreference"
+					type="s2i:NotificationPreferenceType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CustomerID" type="s2i:CustomerIDType" />
+	<xs:element name="GetCustomerRequest" type="s2i:CustomerIDType" />
+	<xs:element name="GetCustomerResponse" type="s2i:CustomerType" />
+	<xs:element name="UpdateCustomerRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerID" type="s2i:CustomerIDType" />
+				<xs:element minOccurs="0" name="Details"
+					type="s2i:CustomerDetailsType" />
+				<xs:element maxOccurs="unbounded" minOccurs="0"
+					name="CustomerEmail" type="s2i:CustomerEmailType" />
+				<xs:element maxOccurs="unbounded" minOccurs="0"
+					name="NotificationPreference"
+					type="s2i:NotificationPreferenceType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeleteCustomerRequest" type="s2i:CustomerIDType" />
+	<xs:element name="ActiveCustomerRequest" type="s2i:CustomerIDType" />
+	<xs:element name="AddNotificationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerID" type="s2i:CustomerIDType" />
+				<xs:element maxOccurs="unbounded"
+					name="NotificationPreference"
+					type="s2i:NotificationPreferenceType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeleteNotificationRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerID" type="s2i:CustomerIDType" />
+				<xs:element maxOccurs="unbounded"
+					name="NotificationService" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>VLRA	Vehicle License
+DLRA	Driver License
+GEN         General</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InvalidateEmailRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CustomerID" type="s2i:CustomerIDType" />
+				<xs:element maxOccurs="1" name="Email" type="xs:string" />
+				<xs:element maxOccurs="1" name="OperatorName"
+					type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FindCustomersByEmailRequest" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>That's email address</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="FindCustomersByEmailResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0"
+					name="Customer" type="s2i:CustomerType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FindCustomersByServiceRequest" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>That's rin, din and hc</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="FindCustomersByServiceResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0"
+					name="Customer" type="s2i:CustomerType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- === Communication Related Messages-->
+	<xs:element name="SendCustomerEmailRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CommunicationEventType"
+					type="s2i:CommunicationEventType">
+					<xs:annotation>
+						<xs:documentation>NOT	Renewal Notification
+REM	Reminder Notification
+GEN	General Notification
+REG	Registration
+ENR	Enrollment</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="CustomerID" type="s2i:CustomerIDType" />
+				<xs:element minOccurs="0" name="Parameters"
+					type="s2i:NameValueParametersType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SendAnonymousEmailRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CommunicationEventType"
+					type="s2i:CommunicationEventType" />
+				<xs:element name="Details"
+					type="s2i:CustomerDetailsType" />
+				<xs:element name="Email" type="xs:string" />
+				<xs:element minOccurs="0" name="Parameters"
+					type="s2i:NameValueParametersType" />
+				<xs:element minOccurs="0" name="Attachments"
+					type="s2i:MessageAttachmentsType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SendAsyncEmailRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CommunicationEventType"
+					type="s2i:CommunicationEventType" />
+				<xs:element minOccurs="0" name="CustomerID"
+					type="s2i:CustomerIDType" />
+				<xs:element minOccurs="0" name="Details"
+					type="s2i:CustomerDetailsType" />
+				<xs:element minOccurs="0" name="Email" type="xs:string" />
+				<xs:element minOccurs="0" name="Parameters"
+					type="s2i:NameValueParametersType" />
+				<xs:element minOccurs="0" name="Attachments"
+					type="s2i:MessageAttachmentsType" />
+				<xs:element name="DeliveryDate" type="xs:date" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PutGeneralCommunicationEventRequest"
+		type="s2i:GeneralCommunicationEventType" />
+	<xs:element name="ListGeneralCommunicationEventsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" name="StartPosition"
+					type="xs:int" />
+				<xs:element minOccurs="0" name="MaximumNumber"
+					type="xs:int" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ListGeneralCommunicationEventsResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element maxOccurs="unbounded" minOccurs="0"
+					name="GeneralCommunicationEvent"
+					type="s2i:GeneralCommunicationEventType" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

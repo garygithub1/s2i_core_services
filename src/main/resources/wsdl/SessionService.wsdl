@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://session.service.sodp.gsc.gov.on.ca" xmlns:impl="http://session.service.sodp.gsc.gov.on.ca" xmlns:intf="http://session.service.sodp.gsc.gov.on.ca" xmlns:tns2="http://service.sodp.gsc.gov.on.ca" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <schema targetNamespace="http://session.service.sodp.gsc.gov.on.ca" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <element name="createSessionResponse">
+    <complexType>
+     <sequence>
+      <element name="createSessionReturn" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="closeSession">
+    <complexType>
+     <sequence>
+      <element name="sessionId" type="xsd:long"/>
+      <element name="eventType" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="closeSessionResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="createSession">
+    <complexType>
+     <sequence>
+      <element name="sessionType" nillable="true" type="xsd:string"/>
+      <element name="languageCode" nillable="true" type="xsd:string"/>
+      <element name="channelId" nillable="true" type="xsd:string"/>
+      <element name="terminalId" nillable="true" type="xsd:string"/>
+      <element name="internetIpAddress" nillable="true" type="xsd:string"/>
+      <element name="userId" nillable="true" type="xsd:string"/>
+      <element name="userAgent" nillable="true" type="xsd:string"/>
+      <element name="deviceType" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+    <schema targetNamespace="http://service.sodp.gsc.gov.on.ca" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <complexType name="DSFault">
+    <sequence>
+     <element name="messageCode" nillable="true" type="xsd:string"/>
+     <element name="message" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="DSFault" nillable="true" type="tns2:DSFault"/>
+  </schema>
+  </wsdl:types>
+  <wsdl:message name="closeSessionResponse">
+    <wsdl:part element="impl:closeSessionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createSessionRequest">
+    <wsdl:part element="impl:createSession" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createSessionResponse">
+    <wsdl:part element="impl:createSessionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="closeSessionRequest">
+    <wsdl:part element="impl:closeSession" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DSFault">
+    <wsdl:part element="tns2:DSFault" name="fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="SessionService">
+    <wsdl:operation name="createSession">
+      <wsdl:input message="impl:createSessionRequest" name="createSessionRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:createSessionResponse" name="createSessionResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:DSFault" name="DSFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="closeSession">
+      <wsdl:input message="impl:closeSessionRequest" name="closeSessionRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:closeSessionResponse" name="closeSessionResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:DSFault" name="DSFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SessionServiceSoapBinding" type="impl:SessionService">
+<wsaw:UsingAddressing wsdl:required="false"/>
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createSession">
+      <wsdlsoap:operation soapAction="createSession"/>
+      <wsdl:input name="createSessionRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createSessionResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DSFault">
+        <wsdlsoap:fault name="DSFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="closeSession">
+      <wsdlsoap:operation soapAction="closeSession"/>
+      <wsdl:input name="closeSessionRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="closeSessionResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DSFault">
+        <wsdlsoap:fault name="DSFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SessionServiceService">
+    <wsdl:port binding="impl:SessionServiceSoapBinding" name="SessionService">
+      <wsdlsoap:address location="https://gscgikdcapwsa05.service.cihs.gov.on.ca:8444/S2I/services/BaseServices/services/SessionService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

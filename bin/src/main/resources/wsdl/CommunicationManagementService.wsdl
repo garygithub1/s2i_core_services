@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://intf.comm.s2i.sodp.gov.on.ca" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s2i="http://data.s2i.sodp.gov.on.ca" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://intf.comm.s2i.sodp.gov.on.ca" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xs:schema elementFormDefault="qualified" targetNamespace="http://intf.comm.s2i.sodp.gov.on.ca">
+			<xs:import namespace="http://data.s2i.sodp.gov.on.ca" schemaLocation="S2IDataSchema.xsd"/>
+        </xs:schema>
+	</wsdl:types>
+	<wsdl:message name="SendCustomerEmailRequest">
+		<wsdl:part element="s2i:SendCustomerEmailRequest" name="SendCustomerEmailRequestMessage"/>
+	</wsdl:message>
+	<wsdl:message name="SendCustomerEmailResponseMessage">
+		<wsdl:part element="s2i:VoidResponse" name="SendCustomerEmailResponseMessage"/>
+	</wsdl:message>
+	<wsdl:message name="SendCustomerEmailFault">
+		<wsdl:part element="s2i:DSFault" name="SendCustomerEmailFaultMessage"/>
+	</wsdl:message>
+	<wsdl:message name="SendAnonymousEmailRequest">
+		<wsdl:part element="s2i:SendAnonymousEmailRequest" name="SendAnonymousEmailRequestMessage"/>
+	</wsdl:message>
+	<wsdl:message name="SendAnonymousEmailResponseMessage">
+		<wsdl:part element="s2i:VoidResponse" name="SendAnonymousEmailResponseMessage"/>
+	</wsdl:message>
+	<wsdl:message name="SendAnonymousEmailFault">
+		<wsdl:part element="s2i:DSFault" name="SendAnonymousEmailFaultMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ListGeneralCommunicationEventsRequest">
+		<wsdl:part element="s2i:ListGeneralCommunicationEventsRequest" name="ListGeneralCommunicationEventsRequestMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ListGeneralCommunicationEventsResponse">
+		<wsdl:part element="s2i:ListGeneralCommunicationEventsResponse" name="ListGeneralCommunicationEventsResponseMessage"/>
+	</wsdl:message>
+	<wsdl:message name="PutGeneralCommunicationEventRequest">
+		<wsdl:part element="s2i:PutGeneralCommunicationEventRequest" name="PutGeneralCommunicationEventRequestMessage"/>
+	</wsdl:message>
+	<wsdl:message name="PutGeneralCommunicationEventResponse">
+		<wsdl:part element="s2i:VoidResponse" name="PutGeneralCommunicationEventResponseMessage"/>
+	</wsdl:message>
+	<wsdl:message name="ListGeneralCommunicationEventsFault">
+		<wsdl:part element="s2i:DSFault" name="ListGeneralCommunicationEventsFaultMessage"/>
+	</wsdl:message>
+	<wsdl:message name="PutGeneralCommunicationEventFault">
+		<wsdl:part element="s2i:DSFault" name="PutGeneralCommunicationEventFaultMessage"/>
+	</wsdl:message>
+    <wsdl:message name="sendAsyncEmailRequestMsg">
+    <wsdl:part element="s2i:SendAsyncEmailRequest" name="SendAsyncEmailRequestMessage"/>
+  </wsdl:message>
+    <wsdl:message name="sendAsyncEmailResponseMsg">
+    <wsdl:part element="s2i:VoidResponse" name="SendAsyncEmailResponseMessage"/>
+  </wsdl:message>
+    <wsdl:message name="sendAsyncEmail_SendAsyncEmailFaultMsg">
+    <wsdl:part element="s2i:DSFault" name="SendAsyncEmailFault"/>
+  </wsdl:message>
+    <wsdl:portType name="CommunicationManagementService">
+		<wsdl:operation name="sendCustomerEmail">
+			<wsdl:input message="tns:SendCustomerEmailRequest"/>
+			<wsdl:output message="tns:SendCustomerEmailResponseMessage"/>
+			<wsdl:fault message="tns:SendCustomerEmailFault" name="SendCustomerEmailFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="sendAnonymousEmail">
+			<wsdl:input message="tns:SendAnonymousEmailRequest"/>
+			<wsdl:output message="tns:SendAnonymousEmailResponseMessage"/>
+			<wsdl:fault message="tns:SendAnonymousEmailFault" name="SendAnonymousEmailFault"/>
+		</wsdl:operation>
+        <wsdl:operation name="sendAsyncEmail">
+      		<wsdl:input message="tns:sendAsyncEmailRequestMsg"/>
+      		<wsdl:output message="tns:sendAsyncEmailResponseMsg"/>
+      		<wsdl:fault message="tns:sendAsyncEmail_SendAsyncEmailFaultMsg" name="SendAsyncEmailFault"/>
+    	</wsdl:operation>
+		<wsdl:operation name="listGeneralCommunicationEvents">
+			<wsdl:input message="tns:ListGeneralCommunicationEventsRequest"/>
+			<wsdl:output message="tns:ListGeneralCommunicationEventsResponse"/>
+			<wsdl:fault message="tns:ListGeneralCommunicationEventsFault" name="ListGeneralCommunicationEventsFault"/>
+		</wsdl:operation>
+		<wsdl:operation name="putGeneralCommunicationEvent">
+			<wsdl:input message="tns:PutGeneralCommunicationEventRequest"/>
+			<wsdl:output message="tns:PutGeneralCommunicationEventResponse"/>
+			<wsdl:fault message="tns:PutGeneralCommunicationEventFault" name="PutGeneralCommunicationEventFault"/>
+		</wsdl:operation>
+    </wsdl:portType>
+	<wsdl:binding name="CommunicationManagementServiceBinding" type="tns:CommunicationManagementService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="sendCustomerEmail">
+			<soap:operation soapAction=""/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="SendCustomerEmailFault">
+				<soap:fault name="SendCustomerEmailFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="sendAnonymousEmail">
+			<soap:operation soapAction=""/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="SendAnonymousEmailFault">
+				<soap:fault name="SendAnonymousEmailFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="sendAsyncEmail">
+			<soap:operation soapAction=""/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="SendAsyncEmailFault">
+				<soap:fault name="SendAsyncEmailFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="listGeneralCommunicationEvents">
+			<soap:operation soapAction=""/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="ListGeneralCommunicationEventsFault">
+				<soap:fault name="ListGeneralCommunicationEventsFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="putGeneralCommunicationEvent">
+			<soap:operation soapAction=""/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+			<wsdl:fault name="PutGeneralCommunicationEventFault">
+				<soap:fault name="PutGeneralCommunicationEventFault" use="literal"/>
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CommunicationManagementServicePort">
+		<wsdl:port binding="tns:CommunicationManagementServiceBinding" name="CommunicationManagementServicePort">
+			<soap:address location="http://localhost:9084/S2IServices/EnotificationsServices/services/CommunicationManagementServicePort"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

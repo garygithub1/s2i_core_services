@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "common.config.instance-name",
+    "type": "java.lang.String",
+    "description": "A description for 'common.config.instance-name'"
+  },
+  {
+    "name": "common.config.session-cache-name",
+    "type": "java.lang.String",
+    "description": "A description for 'common.config.session-cache-name'"
+  },
+  {
+    "name": "common.session.target-url",
+    "type": "java.lang.String",
+    "description": "A description for 'common.session.targetUrl'"
+  },
+  {
+    "name": "common.session.transaction-target-url",
+    "type": "java.lang.String",
+    "description": "A description for 'common.session.transactionTargetUrl'"
+  },
+  {
+    "name": "common.session.url",
+    "type": "java.lang.String",
+    "description": "A description for 'common.session.url'"
+  }
+]}

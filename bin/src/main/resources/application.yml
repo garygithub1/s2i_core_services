@@ -1,0 +1,7 @@
+common:
+  config:
+    instance-name: hazelcast-instance
+    session-cache-name: session-cache
+  session:
+    target-url: https://appdev.gwy.services.ebc.gov.on.ca:8443/esb/common/defaultmpgw/so/dev/sol11/cell02/bpm01/services/S2I/services/BaseServices/services/SessionService
+    transaction-target-url: https://appdev.gwy.services.ebc.gov.on.ca:8443/esb/common/defaultmpgw/so/dev/sol11/cell02/bpm01/services/S2I/services/BaseServices/services/TransactionManagementService

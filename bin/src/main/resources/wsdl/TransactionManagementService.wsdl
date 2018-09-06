@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://transaction.service.sodp.gsc.gov.on.ca" xmlns:impl="http://transaction.service.sodp.gsc.gov.on.ca" xmlns:intf="http://transaction.service.sodp.gsc.gov.on.ca" xmlns:tns2="http://service.sodp.gsc.gov.on.ca" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsi="http://ws-i.org/profiles/basic/1.1/xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <schema targetNamespace="http://transaction.service.sodp.gsc.gov.on.ca" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <element name="createTransactionResponse">
+    <complexType>
+     <sequence>
+      <element name="createTransactionReturn" nillable="true" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="logTransaction">
+    <complexType>
+     <sequence>
+      <element name="transactionId" type="xsd:long"/>
+      <element name="requestType" nillable="true" type="xsd:string"/>
+      <element name="requestTime" nillable="true" type="xsd:dateTime"/>
+      <element name="responseTime" nillable="true" type="xsd:dateTime"/>
+      <element name="serviceAuditId" nillable="true" type="xsd:string"/>
+      <element name="responseCode" type="xsd:boolean"/>
+      <element name="messageCode" nillable="true" type="xsd:string"/>
+      <element name="messageDetail" nillable="true" type="xsd:string"/>
+      <element name="messageUUID" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="logTransactionResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="closeTransaction">
+    <complexType>
+     <sequence>
+      <element name="transactionId" type="xsd:long"/>
+      <element name="eventInfo" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="closeTransactionResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="transactionStateChange">
+    <complexType>
+     <sequence>
+      <element name="transactionId" type="xsd:long"/>
+      <element name="eventType" nillable="true" type="xsd:string"/>
+      <element name="eventInfo" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="transactionStateChangeResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="logXml">
+    <complexType>
+     <sequence>
+      <element name="transactionId" type="xsd:long"/>
+      <element name="xmlType" nillable="true" type="xsd:string"/>
+      <element name="dataXml" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="logXmlResponse">
+    <complexType>
+     <sequence/>
+    </complexType>
+   </element>
+   <element name="findSubTransaction">
+    <complexType>
+     <sequence>
+      <element name="groupTransactionId" type="xsd:long"/>
+      <element name="transactionKey" nillable="true" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findSubTransactionResponse">
+    <complexType>
+     <sequence>
+      <element name="findSubTransactionReturn" nillable="true" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createTransaction">
+    <complexType>
+     <sequence>
+      <element name="sessionId" type="xsd:long"/>
+      <element name="transactionKey" nillable="true" type="xsd:string"/>
+      <element name="groupTransactionId" nillable="true" type="xsd:long"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+    <schema targetNamespace="http://service.sodp.gsc.gov.on.ca" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <complexType name="DSFault">
+    <sequence>
+     <element name="messageCode" nillable="true" type="xsd:string"/>
+     <element name="message" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <element name="DSFault" nillable="true" type="tns2:DSFault"/>
+  </schema>
+  </wsdl:types>
+  <wsdl:message name="createTransactionResponse">
+    <wsdl:part element="impl:createTransactionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="transactionStateChangeRequest">
+    <wsdl:part element="impl:transactionStateChange" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logXmlResponse">
+    <wsdl:part element="impl:logXmlResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findSubTransactionResponse">
+    <wsdl:part element="impl:findSubTransactionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="transactionStateChangeResponse">
+    <wsdl:part element="impl:transactionStateChangeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="findSubTransactionRequest">
+    <wsdl:part element="impl:findSubTransaction" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logXmlRequest">
+    <wsdl:part element="impl:logXml" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createTransactionRequest">
+    <wsdl:part element="impl:createTransaction" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DSFault">
+    <wsdl:part element="tns2:DSFault" name="fault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logTransactionRequest">
+    <wsdl:part element="impl:logTransaction" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="closeTransactionRequest">
+    <wsdl:part element="impl:closeTransaction" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="logTransactionResponse">
+    <wsdl:part element="impl:logTransactionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="closeTransactionResponse">
+    <wsdl:part element="impl:closeTransactionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="TransactionManagementService">
+    <wsdl:operation name="createTransaction">
+      <wsdl:input message="impl:createTransactionRequest" name="createTransactionRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:createTransactionResponse" name="createTransactionResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:DSFault" name="DSFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="logTransaction">
+      <wsdl:input message="impl:logTransactionRequest" name="logTransactionRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:logTransactionResponse" name="logTransactionResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:DSFault" name="DSFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="closeTransaction">
+      <wsdl:input message="impl:closeTransactionRequest" name="closeTransactionRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:closeTransactionResponse" name="closeTransactionResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:DSFault" name="DSFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="transactionStateChange">
+      <wsdl:input message="impl:transactionStateChangeRequest" name="transactionStateChangeRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:transactionStateChangeResponse" name="transactionStateChangeResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:DSFault" name="DSFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="logXml">
+      <wsdl:input message="impl:logXmlRequest" name="logXmlRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:logXmlResponse" name="logXmlResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:DSFault" name="DSFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findSubTransaction">
+      <wsdl:input message="impl:findSubTransactionRequest" name="findSubTransactionRequest">
+    </wsdl:input>
+      <wsdl:output message="impl:findSubTransactionResponse" name="findSubTransactionResponse">
+    </wsdl:output>
+      <wsdl:fault message="impl:DSFault" name="DSFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TransactionManagementServiceSoapBinding" type="impl:TransactionManagementService">
+<wsaw:UsingAddressing wsdl:required="false"/>
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="createTransaction">
+      <wsdlsoap:operation soapAction="createTransaction"/>
+      <wsdl:input name="createTransactionRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createTransactionResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DSFault">
+        <wsdlsoap:fault name="DSFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="logTransaction">
+      <wsdlsoap:operation soapAction="logTransaction"/>
+      <wsdl:input name="logTransactionRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="logTransactionResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DSFault">
+        <wsdlsoap:fault name="DSFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="closeTransaction">
+      <wsdlsoap:operation soapAction="closeTransaction"/>
+      <wsdl:input name="closeTransactionRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="closeTransactionResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DSFault">
+        <wsdlsoap:fault name="DSFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="transactionStateChange">
+      <wsdlsoap:operation soapAction="transactionStateChange"/>
+      <wsdl:input name="transactionStateChangeRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="transactionStateChangeResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DSFault">
+        <wsdlsoap:fault name="DSFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="logXml">
+      <wsdlsoap:operation soapAction="logXml"/>
+      <wsdl:input name="logXmlRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="logXmlResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DSFault">
+        <wsdlsoap:fault name="DSFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="findSubTransaction">
+      <wsdlsoap:operation soapAction="findSubTransaction"/>
+      <wsdl:input name="findSubTransactionRequest">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="findSubTransactionResponse">
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="DSFault">
+        <wsdlsoap:fault name="DSFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TransactionManagementServiceService">
+    <wsdl:port binding="impl:TransactionManagementServiceSoapBinding" name="TransactionManagementService">
+      <wsdlsoap:address location="https://gscgikdcapwsa05.service.cihs.gov.on.ca:8444/S2I/services/BaseServices/services/TransactionManagementService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
